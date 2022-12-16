@@ -1,8 +1,10 @@
 package com.vinhlam.tour.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -42,18 +44,18 @@ public class TourController {
 	}
 	
 	
-	//API Get all Tour: http://localhost:8080/api/tours/getTourIsFilter
-		@GetMapping("/getTourIsFilter")
-		public ResponseEntity<?> getTourIsFilter(@RequestParam(value = "numSlot", defaultValue = "1", required = false) int numSlot,
+	//API Get all Tour: http://localhost:8080/api/tours/getListTours
+		@GetMapping("/getListTours")
+		public ResponseEntity<?> getListTourIs(@RequestParam(value = "numSlot", defaultValue = "1", required = false) int numSlot,
 				@RequestParam(value = "lang", defaultValue = "vn", required = false) String lang,
-				@RequestParam(value = "date", defaultValue = "15/12/2022", required = false) Date date,
-				@RequestParam(value = "currency", defaultValue = "VND", required = false) String currency) {
-			List<TourDTO> listTourDTO = tourService.getTourIsFilter(numSlot, lang, date, currency);
+				@RequestParam(value = "date", defaultValue = "12/16/2022", required = false) String date,
+				@RequestParam(value = "currency", defaultValue = "VND", required = false) String currency) throws ParseException {
+			List<Document> listTours = tourService.getListTours(numSlot, lang, date, currency);
 			
-			if(listTourDTO == null || listTourDTO.size() == 0) {
+			if(listTours == null || listTours.size() == 0) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List tours is null");
 			} else {
-				return ResponseEntity.ok(listTourDTO);
+				return ResponseEntity.ok(listTours);
 			}
 		}
 }

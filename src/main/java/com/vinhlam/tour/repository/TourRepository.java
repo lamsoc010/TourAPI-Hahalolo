@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.vinhlam.tour.entity.Tour;
 
 @Repository
-public interface TourRepository extends MongoRepository<Tour, ObjectId>{
+public interface TourRepository extends MongoRepository<Tour, String>{
 
 }

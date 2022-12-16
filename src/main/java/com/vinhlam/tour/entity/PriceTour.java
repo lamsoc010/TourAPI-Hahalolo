@@ -5,6 +5,8 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,12 @@ import lombok.NoArgsConstructor;
 public class PriceTour {
 
 	@Id
-	private String _id;
+	private String id;
 	private String tourId;
 	private Float price;
 	private String currency;
-	private Date dateApplyStart;
-	private Date dateApplyEnd;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private String dateApplyStart;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private String dateApplyEnd;
 }

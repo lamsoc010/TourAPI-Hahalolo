@@ -1,9 +1,13 @@
 package com.vinhlam.tour.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,9 +21,11 @@ import lombok.NoArgsConstructor;
 public class PriceOpen {
 	
 	@Id
-	private String _id;
+	private String id;
 	private String tourId;
-	private Date dateOpen;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate  dateOpen;
 	private Float price;
 	private String currency;
 }

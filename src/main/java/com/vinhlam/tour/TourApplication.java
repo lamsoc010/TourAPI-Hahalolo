@@ -3,6 +3,7 @@ package com.vinhlam.tour;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,13 @@ public class TourApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TourApplication.class, args);
 	}
+	
+	@Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
+        return modelMapper;
+    }
 	
 	@Bean
 	public MongoDatabase mongoDatabase() {

@@ -16,9 +16,9 @@ import lombok.NoArgsConstructor;
 
 @Document(collection = "tour")
 public class Tour {
-	
+
 	@Id
-	private ObjectId _id;
+	private String id;
 	
 	private List<Infos> infos;
 	
