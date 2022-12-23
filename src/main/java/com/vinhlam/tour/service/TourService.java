@@ -33,6 +33,7 @@ import com.vinhlam.tour.entity.Tour;
 import com.vinhlam.tour.repository.DateOpenRepository;
 import com.vinhlam.tour.repository.PriceTourRepository;
 import com.vinhlam.tour.repository.TourRepository;
+import com.vinhlam.tour.shared.FunctionShared;
 
 import ch.qos.logback.core.model.Model;
 
@@ -48,13 +49,13 @@ public class TourService {
 	@Autowired
 	private DateOpenRepository dateOpenRepository;
 
-
-//	Get All Tour
-	public List<Tour> getAllTour(int pageSize, int pageNo) {
-		
-		List<Tour> listTours = tourRepository.getAllTour(pageSize, pageNo);
-		return listTours;
-	}
+//
+////	Get All Tour
+//	public List<Tour> getAllTour(int pageSize, int pageNo) {
+//		
+//		List<Tour> listTours = tourRepository.getAllTour(pageSize, pageNo);
+//		return listTours;
+//	}
 	
 //	1. Get list Tour by numSlot, lang, date, currency
 	public List<Document> getListTours(int numSlot, String lang, String date, String currency) throws ParseException {
@@ -91,9 +92,9 @@ public class TourService {
 			for(Document tour: listTours) {
 				if(priceTour.getString("tourId").equals(tour.getString("_id"))) {
 					tour.append("currency", currency);
-					tour.append("price", convertCurrencyPrice(priceTour.getString("currency"), priceTour.getInteger("price"), currency ));
+					tour.append("price", FunctionShared.convertCurrencyPrice(priceTour.getString("currency"), priceTour.getInteger("price"), currency ));
 					tour.append("numSlot", numSlot);
-					tour.append("totalPrice", convertCurrencyPrice(priceTour.getString("currency"), priceTour.getInteger("price"), currency ) * numSlot);
+					tour.append("totalPrice", FunctionShared.convertCurrencyPrice(priceTour.getString("currency"), priceTour.getInteger("price"), currency ) * numSlot);
 				}
 			}
 		}
@@ -102,33 +103,6 @@ public class TourService {
 	}
 	
 	
-//	Convert price by currency
-	public Double convertCurrencyPrice(String currencyCurrent, double price, String currencyNew) {
-		double priceNew = 0;
-		if(!currencyNew.equalsIgnoreCase("USD") || !currencyNew.equalsIgnoreCase("VND")) {
-			priceNew = price;
-		}
-		if(!currencyCurrent.equals(currencyNew)) {
-			if(currencyCurrent.equalsIgnoreCase("VND") && currencyNew.equalsIgnoreCase("USD")) {
-				priceNew = price/23555;
-			}
-			if(currencyCurrent.equalsIgnoreCase("USD") && currencyNew.equalsIgnoreCase("VND")) {
-				priceNew = price * 23555;
-			} 
-		} else {
-			priceNew = price;
-		}
-		
-//		Convert price to BigDecimal
-		int scale = 2;
-		BigDecimal tempBig = convertNumberToBigDecimal(priceNew, scale);
-		return Double.parseDouble(tempBig.toString());
-	}
-	
-	public BigDecimal convertNumberToBigDecimal(double price, int scale) {
-		BigDecimal tempBig = new BigDecimal(Double.toString(price));
-		tempBig = tempBig.setScale(scale, BigDecimal.ROUND_HALF_EVEN);
-		return tempBig;
-	}
+
 	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vinhlam.tour.entity.PriceOpen;
 import com.vinhlam.tour.entity.PriceTour;
 import com.vinhlam.tour.service.PriceOpenService;
+import com.vinhlam.tour.shared.FunctionShared;
 
 @RestController
 @RequestMapping("/api/priceOpens")
@@ -30,13 +31,29 @@ public class PriceOpenController {
 	//API Insert PriceOpen: http://localhost:8080/api/priceOpens/insertPriceOpen
 	@PostMapping("/insertPriceOpen")
 	public ResponseEntity<?> insertPriceOpen(@ModelAttribute("priceOpen") PriceOpen priceOpen) {
-		boolean checkResult = priceOpenService.insertPriceOpen(priceOpen);
-		
-		if(!checkResult) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Insert not success");
-		} else {
-			return ResponseEntity.ok("Insert success");
+		try {
+//			Check param(Ở đây nên dùng Hibernate để check dữ liệu trong entity luôn, nhưng giờ demo check ở đây cũng được)
+			if(priceOpen.getCurrency() == null 
+					|| priceOpen.getDateOpen() == null 
+					|| priceOpen.getPrice() == null 
+					|| priceOpen.getTourId() == null ) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Input don't correct");
+			}
+			
+//			Handle Logic
+			boolean checkResult = priceOpenService.insertPriceOpen(priceOpen);
+			
+//			Handle Response
+			if(!checkResult) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Insert not success");
+			} else {
+				return ResponseEntity.ok("Insert success");
+			}
+		} catch (Exception e) {
+//			Ở đây chưa biết trả về mã lỗi nào
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi catch");
 		}
+
 	}
 
 }
