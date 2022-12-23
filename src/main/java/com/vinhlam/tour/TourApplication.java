@@ -16,25 +16,11 @@ import com.mongodb.client.MongoDatabase;
 @SpringBootApplication
 public class TourApplication {
 
-	@Value("${spring.data.mongodb.database}")
-	private String mongoDB;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(TourApplication.class, args);
 	}
 	
-	@Bean
-    public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setSkipNullEnabled(true);
-        return modelMapper;
-    }
 	
-	@Bean
-	public MongoDatabase mongoDatabase() {
-		CodecRegistry cRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), 
-				CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-		return MongoClients.create().getDatabase(mongoDB).withCodecRegistry(cRegistry);
-	}
 
 }

@@ -25,7 +25,7 @@ public class PriceOpen {
 	private String tourId;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate  dateOpen;
+	private Date  dateOpen;
 	private Float price;
 	private String currency;
 }

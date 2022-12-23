@@ -34,8 +34,12 @@ public class TourController {
 	@GetMapping("/getAll")
 	public ResponseEntity<?> getAll(@RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+		//Check param
+		
+		//Handle logic
 		List<Tour> listTours = tourService.getAllTour(pageSize, pageNo);
 		
+		//Handle Reponse
 		if(listTours == null || listTours.size() == 0) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List tours is null");
 		} else {
@@ -50,8 +54,12 @@ public class TourController {
 				@RequestParam(value = "lang", defaultValue = "vn", required = false) String lang,
 				@RequestParam(value = "date", defaultValue = "12/16/2022", required = false) String date,
 				@RequestParam(value = "currency", defaultValue = "VND", required = false) String currency) throws ParseException {
+			//Check param
+			
+			//Handle Logic
 			List<Document> listTours = tourService.getListTours(numSlot, lang, date, currency);
 			
+			//Handle Reponse
 			if(listTours == null || listTours.size() == 0) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List tours is null");
 			} else {

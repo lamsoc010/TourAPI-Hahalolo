@@ -2,6 +2,9 @@ package com.vinhlam.tour.entity;
 
 import java.util.Date;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,7 +27,7 @@ public class PriceTour {
 	private Float price;
 	private String currency;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private String dateApplyStart;
+	private Date dateApplyStart;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private String dateApplyEnd;
+	private Date dateApplyEnd;
 }

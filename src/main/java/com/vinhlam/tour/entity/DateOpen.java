@@ -22,7 +22,7 @@ public class DateOpen {
 	private String id;
 	private String tourId;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date dateAvaiable;
+	private Date dateAvailable;
 	private int status;
 	
 }
