@@ -66,13 +66,13 @@ public class TourController {
 				
 				//Handle Reponse
 				if(listTours == null || listTours.size() == 0) {
-					return ResponseEntity.status(HttpStatus.NOT_FOUND).body("List tours is null");
+					return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("List tours is null");
 				} else {
 					return ResponseEntity.ok(listTours);
 				}
 			} catch (Exception e) {
 //				Ở đây chưa biết trả về mã lỗi nào
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi catch");
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi catch");
 			}
 			
 		}

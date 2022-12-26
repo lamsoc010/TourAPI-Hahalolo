@@ -16,17 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TourDTO {
-
-	@Id
-	private String id;
 	
 	private List<Infos> infos;
 	
 	private int slot;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate  dateOpen;
-	
-	private float priceCurrency;
 }

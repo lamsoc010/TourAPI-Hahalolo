@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.vinhlam.tour.entity.PriceTour;
 import com.vinhlam.tour.entity.Tour;
+import com.vinhlam.tour.exception.PriceTourNotFoundException;
 import com.vinhlam.tour.service.PriceTourService;
 import com.vinhlam.tour.shared.FunctionShared;
 
@@ -43,13 +44,22 @@ public class PriceTourController {
 			
 //			Handle Response
 			if(priceTour == null) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Price Tour is null");
+				throw new PriceTourNotFoundException("PriceTour not found 123");
 			} else {
 				return ResponseEntity.ok(priceTour);
 			}
-		} catch (Exception e) {
+			
+		// Ở đây có 2 hướng xử lý
+			//1. Là xử lý thủ công catch như này, thì có thể bắt được cái catch tổng và nhiều catch cùng lúc
+			//2. Là exception này đã được cấu hình bắt tự động trong advice thì chỉ cẩn throws vào là được, khỏi cần try catch
+				//nhưng như vậy thì lỡ có những lỗi khác ngoài các lỗi đã bắt thì chịu luôn
+		// Vì sao không return luôn ở trên priceTour == null mà phải tách ra Exception rồi xuống đây bắt catch
+		} catch (PriceTourNotFoundException e) { 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		} 
+		catch (Exception e) {
 //			Ở đây chưa biết trả về mã lỗi nào
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lỗi catch");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi catch");
 		}
 
 	}
